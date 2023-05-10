@@ -237,19 +237,15 @@ function setupPillars() {
 
     //currentSound = audioFiles[i] // add the sound
     //audioFile = loadSound("./assets/audio/" + highlights.getRow(i).getString("highlight_id") + ".mp3")
-    //console.log(audioFile.isLoaded)
 
     let hID = highlights.getRow(i).getString("highlight_id");
 
     var url =
       "https://app.lvn.org/api/highlights/play/" +
       highlights.getRow(i).getString("highlight_id");
-    //console.log(url)
     audioFile = new Audio(url);
-    //console.log(audioFile)
     //audioFile.play()
     // playPromise = audio.play();
-    // console.log('play')
 
     transcript = highlights.get(i, "highlight_words");
 
@@ -336,6 +332,7 @@ function setupPillars() {
       p1PrevW = temp[2];
       pillar1Left = temp[3];
       sumPillarH = p1Prev.y + lineHeight;
+      setupDiv(hID, pillar2Left, p1Prev.y);
     } else if (theme == values[1]) {
       let temp = drawBarParts(
         hasPrev2,
@@ -352,6 +349,7 @@ function setupPillars() {
       p2PrevW = temp[2];
       pillar2Left = temp[3];
       sumPillarH2 = p2Prev.y + lineHeight;
+      // setupDiv(hID, pillar3Left, p2Prev.y);
     } else if (theme == values[2]) {
       let temp = drawBarParts(
         hasPrev3,
@@ -368,6 +366,7 @@ function setupPillars() {
       p3PrevW = temp[2];
       pillar3Left = temp[3];
       sumPillarH3 = p3Prev.y + lineHeight;
+      // setupDiv(hID, pillar4Left, p3Prev.y);
     } else if (theme == values[3]) {
       let temp = drawBarParts(
         hasPrev4,
@@ -384,6 +383,7 @@ function setupPillars() {
       p4PrevW = temp[2];
       pillar4Left = temp[3];
       sumPillarH4 = p4Prev.y + lineHeight;
+      // setupDiv(hID, pillar5Left, p4Prev.y);
     } else if (theme == values[4]) {
       let temp = drawBarParts(
         hasPrev5,
@@ -400,6 +400,7 @@ function setupPillars() {
       p5PrevW = temp[2];
       pillar5Left = temp[3];
       sumPillarH5 = p5Prev.y + lineHeight;
+      // setupDiv(hID, pillar6Left, p5Prev.y);
     } else if (theme == values[5]) {
       let temp = drawBarParts(
         hasPrev6,
@@ -416,6 +417,7 @@ function setupPillars() {
       p6PrevW = temp[2];
       pillar6Left = temp[3];
       sumPillarH6 = p6Prev.y + lineHeight;
+      // setupDiv(hID, pillar7Left, p6Prev.y);
     } else if (theme == values[6]) {
       let temp = drawBarParts(
         hasPrev7,
@@ -432,6 +434,7 @@ function setupPillars() {
       p7PrevW = temp[2];
       pillar7Left = temp[3];
       sumPillarH7 = p7Prev.y + lineHeight;
+      // setupDiv(hID, pillar8Left, p7Prev.y);
     } else if (theme == values[7]) {
       let temp = drawBarParts(
         hasPrev8,
@@ -448,6 +451,7 @@ function setupPillars() {
       p8PrevW = temp[2];
       pillar8Left = temp[3];
       sumPillarH8 = p8Prev.y + lineHeight;
+      // setupDiv(hID, pillar9Left, p8Prev.y);
     } else if (theme == values[8]) {
       let temp = drawBarParts(
         hasPrev9,
@@ -464,6 +468,7 @@ function setupPillars() {
       p9PrevW = temp[2];
       pillar9Left = temp[3];
       sumPillarH9 = p9Prev.y + lineHeight;
+      // setupDiv(hID, pillar10Left, p9Prev.y);
     } else if (theme == values[9]) {
       let temp = drawBarParts(
         hasPrev10,
@@ -480,6 +485,7 @@ function setupPillars() {
       p10PrevW = temp[2];
       pillar10Left = temp[3];
       sumPillarH10 = p10Prev.y + lineHeight;
+      // setupDiv(hID, pillar9Left, p10Prev.y);
     }
   }
 
@@ -493,11 +499,9 @@ function setupPillars() {
 }
 
 function setDiv(div, pillarLeft) {
-  // div.position(pillarLeft,pillarTop);
-  div.position(windowWidth - 350, windowHeight - 250);
+  div.position(pillarLeft,pillarTop);
   // div.style('padding', '10px');
   // div.style('background-color', 'white');
-  div.style('position', 'fixed');
   div.style('visibility', 'hidden');
 }
 
@@ -662,8 +666,16 @@ class hRect {
       //fill(this.color);
       if (this.hover) {
         fill(this.color);
+        //display LVN transcript
+        // select(`#tDiv-${this.id.toString()}`).style('visibility', 'visible');
+        // console.log(`#tDiv-${this.id.toString()}`);
+        // let test = select(`#tDiv-${this.id.toString()}`);
+        // test.
+        // console.log(test);
       } else {
         fill(red(this.color), green(this.color), blue(this.color), 150);
+        //hide LVN transcript
+        // select(`#tDiv-${this.id.toString()}`).style('visibility', 'hidden');
       }
       rectMode(CORNER);
       rect(this.x[i], this.y[i], this.w[i], lineHeight);
@@ -703,9 +715,13 @@ class hRect {
   }
 
   displayTranscript() {
+    //let test = select(`#tDiv-${this.id.toString()}`);
     //let div = createElement('div','');
     //let transcriptX = this.x;
     if (this.hover) {
+      //display LVN transcript
+      // console.log(test);
+      // test.style('visibility', 'visible');
       //       rectMode(CORNER)
       //       fill(255)
       //       transcriptX = this.x[0];
@@ -731,13 +747,13 @@ class hRect {
       // div.position(transcriptX,this.y[0]);
       // div.style('padding', '10px');
       // div.style('background-color', 'white');
-      div1.style('visibility', 'visible');
+      // div1.style('visibility', 'visible');
       // console.log(div1);
       div1.html('');
       div1.html('<iframe src="https://embed.lvn.org/?hid=' + this.id + ' width="100%" height="425" scrolling="no" frameborder="no" style="max-width: 850px; margin: 0 auto; display: block"></iframe>');
     } else {
       // div1.html('');
-      //div1.style('visibility', 'hidden');
+      div1.style('visibility', 'hidden');
     }
   }
 }
@@ -785,6 +801,14 @@ class summaryRect {
   hide() {
     //
   }
+}
+
+function setupDiv(hID, x, y){
+  let tDiv = createElement('div', ''); //LVN transcript embed div
+    tDiv.id(`tDiv-${hID.toString()}`);
+    tDiv.position(x, y);
+    tDiv.html('<iframe src="https://embed.lvn.org/?hid=' + hID + ' width="100%" height="425" scrolling="no" frameborder="no" style="max-width: 850px; margin: 0 auto; display: block"></iframe>');
+    tDiv.style('visibility', 'hidden');
 }
 
 function setupDesign() {
@@ -949,20 +973,9 @@ function mousePressed() {
   }
 }
 
-function keyTyped() {
-  //   if (keyCode === RETURN) {
-  //     var filepath = `RTMIT Highlights - Values ${year()}-${month()}-${day()}-${hour()}:${minute()}:${second()}`;
-  //     saveCanvas(filepath, "png");
-  //   }
-
-  if (keyCode === 'RETURN') {
-    div1.html('');
-    //console.log("reached");
-  }
-}
-
-function keyTyped() {
-  if (key === 'x') {
-    div1.html('');
-  }
-}
+// function keyTyped() {
+//   if (keyCode === RETURN) {
+//     var filepath = `RTMIT Highlights - Values ${year()}-${month()}-${day()}-${hour()}:${minute()}:${second()}`;
+//     saveCanvas(filepath, "png");
+//   }
+// }
